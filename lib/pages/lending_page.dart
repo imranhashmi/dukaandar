@@ -1,12 +1,12 @@
 import "package:flutter/material.dart";
 
 class LendingPage extends StatelessWidget { //stateless widget is basically static widgets which don't change overtime
- @override
+  @override
   Widget build(BuildContext context) {
    return new Material( // a page or a piece of paper
      color: Colors.greenAccent,
      child: new InkWell(
-       onTap: () => print("We Tap the page"),
+       onTap: () => print("We Tap the page1"),
        onDoubleTap: () => print("We double Tap the page"),
        child: new Column(
          mainAxisAlignment: MainAxisAlignment.center,
