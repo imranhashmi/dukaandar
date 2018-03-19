@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget
 {
@@ -13,7 +14,13 @@ class LoginPageState extends State<LoginPage>
 
   void onLoginPressed () {
     print("OnLoginPressed "+emailController.text+" pw : "+passwordController.text);
+    _loadHomePage();
   }
+
+  void _loadHomePage(){
+    runApp(new HomePage());
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
