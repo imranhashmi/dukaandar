@@ -1,20 +1,9 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
+import "./pages/lending_page.dart";
 
-void main() => runApp(new MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Welcome to your Store',
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Welcome to your Store'),
-        ),
-        body: new Center(
-          child: new Text('Hello Store'),
-        ),
-      ),
-    );
-  }
+void main ()
+{
+  runApp(new MaterialApp(
+    home: new LendingPage(),
+  ));
 }
