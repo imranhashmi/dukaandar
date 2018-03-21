@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SurveysPage extends StatelessWidget {
+class ManagersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-     return new Center(
-      child: new Text("Surveys"),
+    return new Center(
+      child: new Text("Managers"),
     );
   }
 }
