@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:dukandaar/strings.dart';
+import 'package:dukandaar/pages/profile_page.dart';
 import 'package:dukandaar/pages/surveys_page.dart';
 import 'package:dukandaar/pages/stores_page.dart';
 import 'package:dukandaar/pages/managers_page.dart';
+import 'package:dukandaar/pages/statistics_page.dart';
 
 class DrawerItem {
   String title;
@@ -12,9 +15,11 @@ class DrawerItem {
 
 class HomePage extends StatefulWidget {
   final drawerItems = [
-    new DrawerItem("Surveys", Icons.check_box),
-    new DrawerItem("Stores", Icons.store),
-    new DrawerItem("Managers", Icons.group)
+    new DrawerItem(Strings.profileTitle, Icons.person),
+    new DrawerItem(Strings.surveysTitle, Icons.book),
+    new DrawerItem(Strings.storesTitle, Icons.store),
+    new DrawerItem(Strings.managersTitle, Icons.group),
+    new DrawerItem(Strings.statisticsTitle, Icons.pie_chart),
   ];
 
   @override
@@ -29,11 +34,15 @@ class HomePageState extends State<HomePage> {
    _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new SurveysPage();
+        return new ProfilePage();
       case 1:
-        return new StoresPage();
+        return new SurveysPage();
       case 2:
+        return new StoresPage();
+      case 3:
         return new ManagersPage();
+      case 4:
+        return new StatisticsPage();  
 
       default:
         return new Text("Error");
