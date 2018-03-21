@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+
+import 'package:dukandaar/pages/home_page.dart';
 
 class LoginPage extends StatefulWidget
 {
@@ -18,7 +19,12 @@ class LoginPageState extends State<LoginPage>
   }
 
   void _loadHomePage(){
-    runApp(new HomePage());
+    Navigator.of(context).push( new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return new HomePage();
+        }
+      )
+    );
   }
 
   @override
