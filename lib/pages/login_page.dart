@@ -19,7 +19,7 @@ class LoginPageState extends State<LoginPage>
   }
 
   void _loadHomePage(){
-    Navigator.of(context).push( new MaterialPageRoute<Null>(
+    Navigator.of(context).push( new MaterialPageRoute(
         builder: (BuildContext context) {
           return new HomePage();
         }
