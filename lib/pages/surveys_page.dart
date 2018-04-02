@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:dukandaar/datamodel/survey.dart';
+import 'package:dukandaar/pages/add_form.dart';
 
 class SurveysPageState extends State<SurveysPage> {
   var _items = <Survey>[];
@@ -19,7 +20,7 @@ class SurveysPageState extends State<SurveysPage> {
   Widget build(BuildContext context) {
     return new Scaffold (
       floatingActionButton: new FloatingActionButton(
-        onPressed: _addData,
+        onPressed: () { _showForm(context); },
         tooltip: 'Add',
         backgroundColor: Colors.green[400],
         child: new Icon(Icons.add)
@@ -62,12 +63,25 @@ class SurveysPageState extends State<SurveysPage> {
     });
   }
 
-  _addData(){
+  _addData(Survey item){
     setState((){
       // add new item here, 
-      final item = new Survey("dummy" + "${_items.length}","description");
+       item.name += "${_items.length}";
       _items.add(item);
     });    
+  }
+
+  _showForm(BuildContext context) async {
+    Survey item = await Navigator.of(context).push(
+      new MaterialPageRoute<Survey>(
+        builder: (BuildContext context) {
+          return new AddForm();
+        }
+      )
+    );
+    if(item != null){
+      _addData(item);
+    }
   }
 
   // NOT USED for now
