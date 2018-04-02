@@ -6,16 +6,13 @@ import 'package:http/http.dart' as http;
 import 'package:dukandaar/datamodel/store.dart';
 
 class StoresPageState extends State<StoresPage> {
-  var _stores = <Store>[];
+  var _items = <Store>[];
 
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
   @override
   void initState() {
     super.initState();
-
-    // NOT USED for now
-    //_loadData();
   }
 
   @override
@@ -24,10 +21,11 @@ class StoresPageState extends State<StoresPage> {
       floatingActionButton: new FloatingActionButton(
         onPressed: _addData,
         tooltip: 'Add',
+        backgroundColor: Colors.green[400],
         child: new Icon(Icons.add)
       ),
       body:  new ListView.builder(
-          itemCount: _stores.length * 2,
+          itemCount: _items.length * 2,
           itemBuilder: (BuildContext context, int position) {
               if (position.isOdd) return new Divider();
 
@@ -40,25 +38,40 @@ class StoresPageState extends State<StoresPage> {
   }
 
   Widget _buildRow(int i) {
-    return new Padding(
+    return new Dismissible(
+      key: new Key(i.toString()),
+      child: new Padding(
         padding: const EdgeInsets.all(16.0),
         child: new ListTile(
-          title: new Text(_stores[i].name, style: _biggerFont),
-          subtitle: new Text(_stores[i].description, style: _biggerFont),                    
-        )
+          title: new Text(_items[i].name, style: _biggerFont),
+          subtitle: new Text(_items[i].description, style: _biggerFont),                        
+        ),
+      ),
+      resizeDuration: null,
+      direction: DismissDirection.horizontal,
+      onDismissed: (DismissDirection direction) {
+        _deleteData(_items[i]);
+      },
     );
+  }
+
+  _deleteData(var item){
+    setState( (){
+      if(_items.contains(item))
+      _items.remove(item);
+    });
   }
 
   _addData(){
     setState((){
-      // add new store here, 
-       final member = new Store("dummy" + "${_stores.length}","description");
-        _stores.add(member);
+      // add new item here, 
+      final item = new Store("dummy" + "${_items.length}","description");
+      _items.add(item);
     });    
   }
 
   // NOT USED for now
-  _loadData() async {
+  _getDataFromServer() async {
     String dataURL = "https://api.github.com/orgs/raywenderlich/members";
     http.Response response = await http.get(dataURL);
     setState(() {
@@ -66,7 +79,7 @@ class StoresPageState extends State<StoresPage> {
 
       for (var memberJSON in membersJSON) {
         final member = new Store(memberJSON["login"], memberJSON["avatar_url"]);
-        _stores.add(member);
+        _items.add(member);
       }
     });
   }

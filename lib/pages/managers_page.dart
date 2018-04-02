@@ -6,16 +6,13 @@ import 'package:http/http.dart' as http;
 import 'package:dukandaar/datamodel/manager.dart';
 
 class ManagersPageState extends State<ManagersPage> {
-  var _stores = <Manager>[];
+  var _items = <Manager>[];
 
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
   @override
   void initState() {
     super.initState();
-
-    // NOT USED for now
-    //_loadData();
   }
 
   @override
@@ -24,10 +21,11 @@ class ManagersPageState extends State<ManagersPage> {
       floatingActionButton: new FloatingActionButton(
         onPressed: _addData,
         tooltip: 'Add',
+        backgroundColor: Colors.green[400],
         child: new Icon(Icons.add)
       ),
       body:  new ListView.builder(
-          itemCount: _stores.length * 2,
+          itemCount: _items.length * 2,
           itemBuilder: (BuildContext context, int position) {
               if (position.isOdd) return new Divider();
 
@@ -40,20 +38,35 @@ class ManagersPageState extends State<ManagersPage> {
   }
 
   Widget _buildRow(int i) {
-    return new Padding(
+    return new Dismissible(
+      key: new Key(i.toString()),
+      child: new Padding(
         padding: const EdgeInsets.all(16.0),
         child: new ListTile(
-          title: new Text(_stores[i].name, style: _biggerFont),
-          subtitle: new Text(_stores[i].description, style: _biggerFont),                    
-        )
+          title: new Text(_items[i].name, style: _biggerFont),
+          subtitle: new Text(_items[i].description, style: _biggerFont),                        
+        ),
+      ),
+      resizeDuration: null,
+      direction: DismissDirection.horizontal,
+      onDismissed: (DismissDirection direction) {
+        _deleteData(_items[i]);
+      },
     );
+  }
+
+  _deleteData(var item){
+    setState( (){
+      if(_items.contains(item))
+      _items.remove(item);
+    });
   }
 
   _addData(){
     setState((){
-      // add new store here, 
-       final member = new Manager("dummy" + "${_stores.length}","description");
-        _stores.add(member);
+      // add new item here, 
+      final item = new Manager("dummy" + "${_items.length}","description");
+      _items.add(item);
     });    
   }
 
@@ -66,7 +79,7 @@ class ManagersPageState extends State<ManagersPage> {
 
       for (var memberJSON in membersJSON) {
         final member = new Manager(memberJSON["login"], memberJSON["avatar_url"]);
-        _stores.add(member);
+        _items.add(member);
       }
     });
   }
