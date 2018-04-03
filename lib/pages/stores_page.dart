@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:dukandaar/datamodel/store.dart';
+import 'package:dukandaar/pages/store_form.dart';
 
 class StoresPageState extends State<StoresPage> {
   var _items = <Store>[];
@@ -15,11 +16,11 @@ class StoresPageState extends State<StoresPage> {
     super.initState();
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return new Scaffold (
       floatingActionButton: new FloatingActionButton(
-        onPressed: _addData,
+        onPressed: () { _showForm(context); },
         tooltip: 'Add',
         backgroundColor: Colors.green[400],
         child: new Icon(Icons.add)
@@ -62,12 +63,25 @@ class StoresPageState extends State<StoresPage> {
     });
   }
 
-  _addData(){
+  _addData(Store item){
     setState((){
       // add new item here, 
-      final item = new Store("dummy" + "${_items.length}","description");
+       item.name += "${_items.length}";
       _items.add(item);
     });    
+  }
+
+  _showForm(BuildContext context) async {
+    Store item = await Navigator.of(context).push(
+      new MaterialPageRoute<Store>(
+        builder: (BuildContext context) {
+          return new StoreForm();
+        }
+      )
+    );
+    if(item != null){
+      _addData(item);
+    }
   }
 
   // NOT USED for now

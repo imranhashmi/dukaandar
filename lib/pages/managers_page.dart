@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:dukandaar/datamodel/manager.dart';
+import 'package:dukandaar/pages/manager_form.dart';
 
 class ManagersPageState extends State<ManagersPage> {
   var _items = <Manager>[];
@@ -19,7 +20,7 @@ class ManagersPageState extends State<ManagersPage> {
   Widget build(BuildContext context) {
     return new Scaffold (
       floatingActionButton: new FloatingActionButton(
-        onPressed: _addData,
+        onPressed: () { _showForm(context); },
         tooltip: 'Add',
         backgroundColor: Colors.green[400],
         child: new Icon(Icons.add)
@@ -62,16 +63,29 @@ class ManagersPageState extends State<ManagersPage> {
     });
   }
 
-  _addData(){
+  _addData(Manager item){
     setState((){
       // add new item here, 
-      final item = new Manager("dummy" + "${_items.length}","description");
+       item.name += "${_items.length}";
       _items.add(item);
     });    
   }
 
+  _showForm(BuildContext context) async {
+    Manager item = await Navigator.of(context).push(
+      new MaterialPageRoute<Manager>(
+        builder: (BuildContext context) {
+          return new ManagerForm();
+        }
+      )
+    );
+    if(item != null){
+      _addData(item);
+    }
+  }
+
   // NOT USED for now
-  _loadData() async {
+  _getDataFromServer() async {
     String dataURL = "https://api.github.com/orgs/raywenderlich/members";
     http.Response response = await http.get(dataURL);
     setState(() {

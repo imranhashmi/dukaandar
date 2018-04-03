@@ -1,6 +1,6 @@
 class Store {
-  final String name;
-  final String description;
+  String name;
+  String description;
 
   Store(this.name, this.description) {
     if (name == null) {

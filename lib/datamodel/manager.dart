@@ -1,6 +1,6 @@
 class Manager {
-    final String name;
-    final String description;
+    String name;
+    String description;
 
     Manager(this.name, this.description) {
       if (name == null) {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:dukandaar/datamodel/survey.dart';
-import 'package:dukandaar/pages/add_form.dart';
+import 'package:dukandaar/pages/survey_form.dart';
 
 class SurveysPageState extends State<SurveysPage> {
   var _items = <Survey>[];
@@ -75,7 +75,7 @@ class SurveysPageState extends State<SurveysPage> {
     Survey item = await Navigator.of(context).push(
       new MaterialPageRoute<Survey>(
         builder: (BuildContext context) {
-          return new AddForm();
+          return new SurveyForm();
         }
       )
     );
@@ -85,7 +85,7 @@ class SurveysPageState extends State<SurveysPage> {
   }
 
   // NOT USED for now
-  _loadData() async {
+  _getDataFromServer() async {
     String dataURL = "https://api.github.com/orgs/raywenderlich/members";
     http.Response response = await http.get(dataURL);
     setState(() {
